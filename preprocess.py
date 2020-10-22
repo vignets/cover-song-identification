@@ -1,20 +1,15 @@
 import itertools
-import sys
-import warnings
 from pathlib import Path
 
+import click
+import cv2
 import deepdish as dd
 import numpy as np
 import pandas as pd
-
-import cv2
 from tqdm import tqdm
 
-SPECT_LEN = 500
-ROOT = Path.cwd()
 
-
-def load(song, feature_type):
+def load(song, feature_type, spect_len):
     feature_spec = dd.io.load(song, f"/{feature_type}")
     feature_spec = feature_spec.astype(np.float32)
     if feature_spec.shape[1] == 12:
@@ -33,18 +28,40 @@ def load(song, feature_type):
 
     # resize
     feature_spec = cv2.resize(
-        feature_spec, (SPECT_LEN, 12), interpolation=cv2.INTER_AREA
+        feature_spec, (spect_len, 12), interpolation=cv2.INTER_AREA
     )
     return feature_spec
 
 
-if __name__ == "__main__":
-    # path to features data
-    feature_types = ["crema", "chroma_cens", "hpcp"]
+@click.command(
+    help="script to downsize the da-tacos dataset, "
+    "generates a single h5 file for each subset"
+)
+@click.option(
+    "--data-dir",
+    "-d",
+    type=click.Path(exists=True),
+    help="path to datasets folder",
+    default="datasets",
+    show_default=True,
+)
+@click.option(
+    "--pcp-features",
+    "-p",
+    type=click.Choice(["crema", "chroma_cens", "hpcp"], case_sensitive=False),
+    multiple=True,
+    help="select pcp feature (use this option multiple times for more than one selection)",
+    default=["crema"],
+    show_default=True,
+)
+@click.option(
+    "--spect-len", help="Resized Spectral Length", default=500, show_default=True,
+)
+def preprocess(data_dir, pcp_features, spect_len):
 
-    for dset, folder in [("trainset", "benchmark"), ("valset", "coveranalysis")]:
-        feature_dir = ROOT / "datasets" / f"da-tacos_{folder}_subset_single_files"
-        store = pd.HDFStore(ROOT / "datasets" / f"{dset}.h5", mode="w")
+    for dset_folder in ["benchmark", "coveranalysis"]:
+        feature_dir = Path(data_dir) / f"da-tacos_{dset_folder}_subset_single_files"
+        store = pd.HDFStore(Path(data_dir) / f"{dset_folder}.h5", mode="w")
 
         data = list()
         for track in feature_dir.glob("*/*"):
@@ -61,20 +78,20 @@ if __name__ == "__main__":
             names=["work_id", "track_id", "chroma_bins"],
         )
 
-        for feature_type in feature_types:
+        for feature_type in pcp_features:
 
             feature_spec = np.empty(
-                (dataset_csv.shape[0], 12, SPECT_LEN), dtype=np.float32
+                (dataset_csv.shape[0], 12, spect_len), dtype=np.float32
             )
 
             for row in tqdm(
                 dataset_csv.itertuples(),
                 total=dataset_csv.shape[0],
-                desc=f"{dset} - {feature_type}",
+                desc=f"{dset_folder} - {feature_type}",
             ):
                 track_file = feature_dir / row.work_id / row.track_id
                 feature_spec[row.Index, :, :] = load(
-                    track_file.with_suffix(".h5"), feature_type
+                    track_file.with_suffix(".h5"), feature_type, spect_len
                 )
 
             df = pd.DataFrame(
@@ -88,3 +105,7 @@ if __name__ == "__main__":
             )
 
         store.close()
+
+
+if __name__ == "__main__":
+    preprocess()
