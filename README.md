@@ -1,4 +1,8 @@
 # Cover Song Identification
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/vignejs/cover-song-identification/master) [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
+
+[<img src="https://deepnote.com/buttons/launch-in-deepnote.svg">](https://deepnote.com/project/34044948-e4b5-4552-8a22-f468666deb3c)
+
 Cover Song Identification with Siamese Network. Embeddings can be generated with CNN encoder for faster retrieval of similar (cover) songs for a given query song.
 
 ## Dataset

@@ -1,7 +1,5 @@
 git+git://github.com/bmcfee/crema
-h5py==2.9.0
-librosa==0.6.2
-acoss
+git+git://github.com/furkanyesiler/acoss
 click
 opencv-python
 deepdish
