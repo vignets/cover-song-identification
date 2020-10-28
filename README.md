@@ -87,7 +87,12 @@ Options:
 ## Training
 <a href="https://colab.research.google.com/github/vignejs/cover-song-identification/blob/master/train.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
-The model was trained on crema pcp features from benchmark subset resized to 23x500 by tiling 2 times in pitch dimension and removing the last row as inspired by [[1]](#1). Siamese has two input CNN encoder with shared weights for learning the embeddings for each input audio features. The two input pair being performance from same works as positive class and performance of one of the work and other from randomly chosen work as negative class. The L1 distance of these two encoder is densely connected to one sigmoidal output. Lookahead optimizer in used in conjunction with Adam for better performance. Model was validatde on coveranalysis subset.
+The model was trained on crema pcp features from benchmark subset resized to 23x500 by tiling 2 times in pitch dimension and removing the last row as inspired by [[1]](#1).
+Siamese has two input CNN encoder with shared weights for learning the embeddings for each input audio features.
+The two input pair being performance from same works as positive class and performance of one of the work and other from randomly chosen work as negative class.
+The L1 distance of these two encoder is densely connected to one sigmoidal output.
+Lookahead optimizer in used in conjunction with Adam for better performance.
+Model was validated on coveranalysis subset.
 
 | ![a single CNN encoder](nn.png) |
 |:--:| 
@@ -96,7 +101,7 @@ The model was trained on crema pcp features from benchmark subset resized to 23x
 ## Evaluation
 <a href="https://colab.research.google.com/github/vignejs/cover-song-identification/blob/master/evaluate.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
-Model was evaluated on a small dataset from youtube. You can get the pretrained weights and testset for evaluation from [here](https://github.com/vignejs/cover-song-identification/releases/tag/v0.1.0).
+Model was from evaluated on a small dataset from youtube. You can get the pretrained and testset for evaluation from [here](https://github.com/vignejs/cover-song-identification/releases/tag/v0.1.0).
 
 ## References
 <a id="1">[1]</a>
