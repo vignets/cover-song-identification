@@ -1,7 +1,7 @@
 # Cover Song Identification
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/vignejs/cover-song-identification/master) [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 
-[<img src="https://deepnote.com/buttons/launch-in-deepnote.svg">](https://deepnote.com/project/34044948-e4b5-4552-8a22-f468666deb3c)
+[<img src="https://deepnote.com/buttons/launch-in-deepnote.svg">](https://deepnote.com/project/82619257-0268-4ccc-bfdb-af99b74ce311)
 
 Cover Song Identification with Siamese Network. Embeddings can be generated with CNN encoder for faster retrieval of similar (cover) songs for a given query song.
 
@@ -84,5 +84,26 @@ Options:
 
 ```
 
-## Network
-![network](nn.png)
+## Training
+<a href="https://colab.research.google.com/github/vignejs/cover-song-identification/blob/master/train.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+The model was trained on crema pcp features from benchmark subset resized to 23x500 by tiling 2 times in pitch dimension and removing the last row as inspired by [[1]](#1). Siamese has two input CNN encoder with shared weights for learning the embeddings for each input audio features. The two input pair being performance from same works as positive class and performance of one of the work and other from randomly chosen work as negative class. The L1 distance of these two encoder is densely connected to one sigmoidal output. Lookahead optimizer in used in conjunction with Adam for better performance.
+
+| ![a single CNN encoder](nn.png) |
+|:--:| 
+|*a single CNN encoder*|
+
+## Evaluation
+<a href="https://colab.research.google.com/github/vignejs/cover-song-identification/blob/master/evaluate.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+Model was from evaluated on a small dataset from youtube. You can get the pretrained and testset for evaluation from [here](https://github.com/vignejs/cover-song-identification/releases/tag/v0.1.0).
+
+## References
+<a id="1">[1]</a>
+Yesiler, Furkan, Joan Serra, and Emilia Gomez. “Accurate and Scalable Version Identification Using Musically-Motivated Embeddings.” ICASSP 2020 - 2020 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) (2020): n. pag. Crossref. Web.
+
+## Issues
+If you face any problem file an issue. Pull requests are welcome.
+
+## License
+[MIT](LICENSE)
