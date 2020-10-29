@@ -113,7 +113,7 @@ k|mAP@k|topk
 
 
 ## Visualizing Embeddings
-PCA was used to reduce the dimension of embeddings.
+Visualizing embeddings of audio tracks in the testset by reducing dimension to 3d and 2d space with PCA. 
 | ![pca 3d](images/pca_3d.png) |
 |:--:| 
 |*embeddings in 3d space*|
