@@ -94,17 +94,36 @@ The L1 distance of these two encoder is densely connected to one sigmoidal outpu
 Lookahead optimizer in used in conjunction with Adam for better performance.
 Model was validated on coveranalysis subset.
 
-| ![a single CNN encoder](nn.png) |
+| ![a single CNN encoder](images/nn.png) |
 |:--:| 
 |*a single CNN encoder*|
 
 ## Evaluation
 <a href="https://colab.research.google.com/github/vignejs/cover-song-identification/blob/master/evaluate.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
-Model was from evaluated on a small dataset from youtube. You can get the pretrained and testset for evaluation from [here](https://github.com/vignejs/cover-song-identification/releases/tag/v0.1.0).
+Model was from evaluated on a small dataset from youtube, which has 10 original works with varying no. of performances. You can get the pretrained and testset for evaluation from [here](https://github.com/vignejs/cover-song-identification/releases/tag/v0.1.0).
+
+### Results
+k|mAP@k|topk
+--|--|--
+|1| 0.700|70.00
+|2| **0.725**|**80.00**
+|5| 0.644|74.00
+|10| 0.621|75.00
+
+
+## Visualizing Embeddings
+PCA was used to reduce the dimension of embeddings.
+| ![pca 3d](images/pca_3d.png) |
+|:--:| 
+|*embeddings in 3d space*|
+
+| ![pca 2d](images/pca_2d.png) |
+|:--:| 
+|*embeddings in 2d space*|
 
 ## References
-<a id="1">[1]</a>
+><a id="1">[1]</a>
 Yesiler, Furkan, Joan Serra, and Emilia Gomez. “Accurate and Scalable Version Identification Using Musically-Motivated Embeddings.” ICASSP 2020 - 2020 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) (2020): n. pag. Crossref. Web.
 
 ## Issues
